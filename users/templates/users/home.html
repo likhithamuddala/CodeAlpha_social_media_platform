@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .post-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  .post-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .post-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .post-author a {
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .post-author a:hover {
+    text-decoration: underline;
+  }
+
+  .post-image {
+    width: 100%;
+    height: auto;
+    margin: 15px 0;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .post-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .post-footer button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .post-footer button:hover {
+    background-color: #0056b3;
+  }
+
+  .post-meta {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+  }
+
+  .no-posts {
+    text-align: center;
+    font-size: 18px;
+    color: #999;
+    margin-top: 100px;
+  }
+</style>
+
+<div class="post-container">
+  <h2 style="text-align:center; margin-bottom: 20px;">Your Feed</h2>
+
+  {% for post in posts %}
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-author">
+          <a href="{% url 'public_profile' post.author.username %}">{{ post.author.username }}</a>
+        </div>
+        <div class="post-meta">
+          {{ post.created_at|date:"F j, Y, g:i a" }}
+        </div>
+      </div>
+
+      <p>{{ post.caption }}</p>
+
+      {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image" class="post-image">
+      {% endif %}
+
+      <p><strong>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</strong></p>
+
+      <div class="post-footer">
+        <form method="post" action="{% url 'like_post' post.id %}">
+          {% csrf_token %}
+          {% if post.liked_by_user %}
+            <button type="submit">Unlike</button>
+          {% else %}
+            <button type="submit">Like</button>
+          {% endif %}
+        </form>
+        <a href="{% url 'post_detail' post.id %}">
+          <button type="button">Comment</button>
+        </a>
+      </div>
+    </div>
+  {% empty %}
+    <p class="no-posts">No posts yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

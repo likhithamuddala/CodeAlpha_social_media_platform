@@ -1,0 +1,12 @@
+<h2>{{ profile_user.username }}'s Profile</h2>
+<p>Followers: {{ followers }}</p>
+<p>Following: {{ following }}</p>
+
+{% for post in posts %}
+  <div>
+    <p>{{ post.caption }}</p>
+    {% if post.image %}
+      <img src="{{ post.image.url }}" alt="Post image">
+    {% endif %}
+  </div>
+{% endfor %}

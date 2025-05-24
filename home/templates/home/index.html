@@ -1,0 +1,83 @@
+
+{% block content %}
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+    margin: 0;
+    padding: 0;
+  }
+
+  .landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+  }
+
+  .landing-container h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #003366;
+  }
+
+  .landing-container p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 40px;
+  }
+
+  .btn-container a {
+    text-decoration: none;
+  }
+
+  .btn {
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 15px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-login {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+  }
+
+  .btn-login:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+  }
+
+  .btn-register {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+  }
+
+  .btn-register:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+  }
+</style>
+
+<div class="landing-container">
+  <h1>Welcome to Social Media Platform</h1>
+  <p>Connect with friends. Share your moments.</p>
+
+  <div class="btn-container">
+    <a href="{% url 'login' %}">
+      <button class="btn btn-login">Login</button>
+    </a>
+    <a href="{% url 'register' %}">
+      <button class="btn btn-register">Register</button>
+    </a>
+  </div>
+</div>
+{% endblock %}

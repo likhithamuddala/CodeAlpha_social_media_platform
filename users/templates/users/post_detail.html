@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f5f7fa;
+    }
+
+    .post-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+        animation: fadeIn 0.4s ease;
+    }
+
+    h2 a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s;
+    }
+
+    h2 a:hover {
+        color: #007BFF;
+    }
+
+    .btn {
+        padding: 8px 18px;
+        font-size: 0.95rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.02);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62;
+        transform: scale(1.02);
+    }
+
+    img {
+        width: 100%;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+
+    p {
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .comment-section {
+        margin-top: 30px;
+    }
+
+    .comment {
+        background-color: #f8f9fa;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .comment strong {
+        color: #333;
+    }
+
+    textarea,
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        transition: border-color 0.3s ease;
+    }
+
+    textarea:focus,
+    input[type="text"]:focus {
+        border-color: #007BFF;
+        outline: none;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="post-container">
+    <h2>
+        <a href="{% url 'public_profile' post.author.username %}">{{ post.author.username }}</a>
+
+        {% if user != post.author %}
+            <form method="post" action="{% url 'follow_user' post.author.id %}" style="display:inline;">
+                {% csrf_token %}
+                {% if post.author.profile in user.profile.following.all %}
+                    <button type="submit" class="btn btn-secondary">Unfollow</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Follow</button>
+                {% endif %}
+            </form>
+        {% endif %}
+    </h2>
+
+    <p>{{ post.caption }}</p>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post image">
+    {% endif %}
+
+    <p><small>Posted on {{ post.created_at|date:"F j, Y, g:i a" }}</small></p>
+
+    <p><strong>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</strong></p>
+
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {% if liked %}
+                <button type="submit" formaction="{% url 'unlike_post' post.id %}" class="btn btn-secondary">Unlike</button>
+            {% else %}
+                <button type="submit" formaction="{% url 'like_post' post.id %}" class="btn btn-primary">Like</button>
+            {% endif %}
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}" class="btn btn-primary">Login</a> to like this post.</p>
+    {% endif %}
+
+    <hr>
+
+    <div class="comment-section">
+        <h4>Comments</h4>
+        {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'add_comment' post.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'login' %}" class="btn btn-primary">Login</a> to comment.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

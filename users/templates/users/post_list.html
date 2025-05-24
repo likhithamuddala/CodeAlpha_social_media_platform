@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% for post in posts %}
+  <div>
+    <h3 style="display: flex; align-items: center; gap: 10px;">
+      {% if post.author and post.author.username %}
+        <a href="{% url 'public_profile' post.author.username %}">{{ post.author.username }}</a>
+      {% else %}
+        <span>Unknown Author</span>
+      {% endif %}
+    </h3>
+
+    <p>{{ post.caption }}</p>
+
+    {% if post.image %}
+      <img src="{{ post.image.url }}" alt="Post image" style="max-width: 100%; height: auto;">
+    {% endif %}
+
+    <p>Posted on {{ post.created_at|date:"F j, Y, g:i a" }}</p>
+
+    <p><strong>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</strong></p>
+
+    <form method="POST" action="{% url 'like_post' post.id %}">
+      {% csrf_token %}
+      <button type="submit">
+        {% if user in post.likes.all %}
+          ❤️ Unlike
+        {% else %}
+          🤍 Like
+        {% endif %}
+      </button>
+    </form>
+
+    <p><a href="{% url 'post_detail' post.id %}">View Details</a></p>
+  </div>
+  <hr>
+{% empty %}
+  <p>No posts found.</p>
+{% endfor %}
+{% endblock %}

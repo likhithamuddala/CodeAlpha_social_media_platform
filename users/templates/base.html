@@ -1,0 +1,129 @@
+{% load static %}  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Social Media App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0 10%;
+            background-color: #f4f6fa;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(90deg, #007BFF, #0056b3);
+            padding: 20px;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #007BFF;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #007BFF;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            margin-top: 30px;
+            min-height: 80vh;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .message {
+            background-color: #e9f5ff;
+            border-left: 5px solid #007BFF;
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            color: #034c8c;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 10px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 30px 0 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Social Media App</h1>
+</header>
+
+<nav>
+    <a href="{% url 'home' %}">Home</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'public_profile' request.user.username %}">My Profile</a>
+    {% endif %}
+</nav>
+
+<main>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <hr>
+    <p>&copy; 2025 My Social Media App</p>
+</footer>
+
+</body>
+</html>
