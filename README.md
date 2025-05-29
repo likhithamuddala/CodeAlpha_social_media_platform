@@ -38,39 +38,21 @@ social_media_platform/
 
 ⚙️ Installation
 
-1. Clone the repo
+# Clone the repo
+git clone https://github.com/likhithamuddala/simple-ecommerce-store.git
 
-   git clone https://github.com/your-username/social_media_platform.git
-   cd social_media_platform
+# Navigate into the project
+cd simple-ecommerce-store/ecommerce
 
-2. Create and activate a virtual environment
+# (Optional) Create virtual environment
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
 
-On macOS/Linux:
-
-python3 -m venv venv
-source venv/bin/activate
-
-On Windows:
-
-python -m venv venv
-venv\Scripts\activate
-
-3. Install required dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-4. Apply migrations
-
+# Run migrations
 python manage.py migrate
 
-5. Create superuser (admin account)
-
-python manage.py createsuperuser
-
-6. Run the development server
-
+# Run the server
 python manage.py runserver
-
-7. Visit the app in your browser
-
-Visit http://127.0.0.1:8000/users/login/ to start using the app!
-
