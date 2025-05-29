@@ -22,10 +22,10 @@ A Django-based social media web application that allows users to create accounts
 - **Other**: Django Custom User Model, Django Forms
 
 
-⚙️ Installation
+##⚙️ Installation
 
 # Clone the repo
-git clone https://github.com/likhithamuddala/simple-ecommerce-store.git
+git clone https://github.com/likhithamuddala/CodeAlpha_social_media_platform.git
 
 # Navigate into the project
 cd simple-ecommerce-store/ecommerce
