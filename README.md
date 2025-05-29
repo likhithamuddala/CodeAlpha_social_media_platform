@@ -21,20 +21,6 @@ A Django-based social media web application that allows users to create accounts
 - **Media Handling**: Django media storage
 - **Other**: Django Custom User Model, Django Forms
 
-📁 Project Structure
-
-social_media_platform/
-│
-├── users/ # Custom user model, profile, authentication views
-├── posts/ # Post creation, like/unlike logic
-├── interactions/ # Follows, comments
-├── templates/ # HTML templates
-├── media/ # Uploaded media files
-├── static/ # Static files (CSS, JS)
-├── social_media_platform/ # Project settings and URLs
-├── db.sqlite3 # SQLite database
-└── manage.py # Django CLI entry point
-
 
 ⚙️ Installation
 
