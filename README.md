@@ -24,7 +24,7 @@ A Django-based social media web application that allows users to create accounts
 
 ##⚙️ Installation
 
-# Clone the repo
+## Clone the repo
 git clone https://github.com/likhithamuddala/CodeAlpha_social_media_platform.git
 
 # Navigate into the project
@@ -42,3 +42,5 @@ python manage.py migrate
 
 # Run the server
 python manage.py runserver
+
+
