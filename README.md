@@ -22,7 +22,7 @@ A Django-based social media web application that allows users to create accounts
 - **Other**: Django Custom User Model, Django Forms
 
 
-##⚙️ Installation
+⚙️ Installation
 
 ```bash
 
